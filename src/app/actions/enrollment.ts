@@ -53,21 +53,41 @@ export async function submitEnrollmentAction(
     };
   }
 
-  const { data: isDuplicate, error: dupError } = await supabase.rpc(
-    "is_duplicate_enrollment",
-    {
-      p_first_name: first_name,
-      p_last_name: last_name,
-      p_birthdate: birthdate,
-      p_school_year_id: activeYear.school_year_id,
-    },
-  );
+  // const { data: isDuplicate, error: dupError } = await supabase.rpc(
+  //   "is_duplicate_enrollment",
+  //   {
+  //     p_first_name: first_name,
+  //     p_last_name: last_name,
+  //     p_birthdate: birthdate,
+  //     p_school_year_id: activeYear.school_year_id,
+  //   },
+  // );
+
+  // if (dupError) {
+  //   return { error: "Something went wrong. Please try again." };
+  // }
+
+  // if (isDuplicate) {
+  //   return {
+  //     error:
+  //       "An application already exists for this student in the current school year.",
+  //   };
+  // }
+
+  const { data: existingApplication, error: dupError } = await supabase
+    .from("enrollment_applications")
+    .select("application_id")
+    .ilike("first_name", first_name.trim())
+    .ilike("last_name", last_name.trim())
+    .eq("birthdate", birthdate)
+    .eq("school_year_id", activeYear.school_year_id)
+    .maybeSingle();
 
   if (dupError) {
     return { error: "Something went wrong. Please try again." };
   }
 
-  if (isDuplicate) {
+  if (existingApplication) {
     return {
       error:
         "An application already exists for this student in the current school year.",
