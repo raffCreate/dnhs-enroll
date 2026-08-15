@@ -13,7 +13,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/20">
+    <div className="flex min-h-screen flex-col bg-muted/20 md:flex-row">
       <Sidebar role={session.role} />
       <main className="flex-1 overflow-y-auto px-6 py-8 sm:px-8">
         {children}

@@ -76,12 +76,12 @@ export function StudentsTable({
 
       <div className="overflow-hidden rounded-lg border border-border bg-background">
         <table className="w-full text-sm">
-          <thead>
+          <thead className="bg-primary/10 font-bold">
             <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
-              <th className="px-4 py-3 font-medium">Student No.</th>
-              <th className="px-4 py-3 font-medium">Name</th>
-              <th className="px-4 py-3 font-medium">Contact</th>
-              <th className="px-4 py-3 font-medium"></th>
+              <th className="hidden px-4 py-3 md:table-cell">Student No.</th>
+              <th className="px-4 py-3">Name</th>
+              <th className="hidden px-4 py-3 md:table-cell">Contact</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -100,14 +100,14 @@ export function StudentsTable({
                 key={student.student_id}
                 className="border-b border-border last:border-0"
               >
-                <td className="px-4 py-3 text-foreground">
+                <td className="hidden px-4 py-3 text-foreground md:table-cell">
                   {student.student_number ?? "—"}
                 </td>
                 <td className="px-4 py-3 text-foreground">
                   {student.last_name}, {student.first_name}{" "}
                   {student.middle_name ?? ""}
                 </td>
-                <td className="px-4 py-3 text-muted-foreground">
+                <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                   {student.contact_number}
                 </td>
                 <td className="px-4 py-3 text-right">

@@ -93,7 +93,7 @@ export default async function AdminDashboardPage() {
           <Link
             key={stat.label}
             href={stat.href}
-            className="rounded-lg border border-border bg-background p-4 transition-colors hover:border-primary hover:bg-accent"
+            className="rounded-lg border border-border bg-primary/10 p-4 transition-colors hover:border-primary hover:bg-accent"
           >
             <p className="font-heading text-2xl font-semibold text-primary">
               {stat.value}
@@ -109,12 +109,14 @@ export default async function AdminDashboardPage() {
         </h2>
         <div className="mt-3 overflow-hidden rounded-lg border border-border bg-background">
           <table className="w-full text-sm">
-            <thead>
+            <thead className="bg-primary/10">
               <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
                 <th className="px-4 py-3 font-medium">Name</th>
                 <th className="px-4 py-3 font-medium">Grade Level</th>
                 <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Submitted</th>
+                <th className="hidden px-4 py-3 font-medium md:table-cell">
+                  Submitted
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -150,7 +152,7 @@ export default async function AdminDashboardPage() {
                       {app.status === "approved" ? "Approved" : "Pending"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">
+                  <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                     {new Date(app.submitted_at).toLocaleDateString("en-PH", {
                       year: "numeric",
                       month: "short",

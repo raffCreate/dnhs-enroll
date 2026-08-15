@@ -96,12 +96,12 @@ export function SchoolYearsList({
 
       <div className="overflow-hidden rounded-lg border border-border bg-background">
         <table className="w-full text-sm">
-          <thead>
+          <thead className="bg-primary/10 font-bold">
             <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
-              <th className="px-4 py-3 font-medium">School Year</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Created</th>
-              <th className="px-4 py-3 font-medium"></th>
+              <th className="px-4 py-3">School Year</th>
+              <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3">Created</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>

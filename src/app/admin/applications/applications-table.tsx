@@ -254,13 +254,13 @@ export function ApplicationsTable({
 
       <div className="overflow-hidden rounded-lg border border-border bg-background">
         <table className="w-full text-sm">
-          <thead>
+          <thead className="bg-primary/10 font-bold">
             <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
-              <th className="px-4 py-3 font-medium">Name</th>
-              <th className="px-4 py-3 font-medium">Grade Level</th>
-              <th className="px-4 py-3 font-medium">Status</th>
-              <th className="px-4 py-3 font-medium">Submitted</th>
-              <th className="px-4 py-3 font-medium"></th>
+              <th className="px-4 py-3">Name</th>
+              <th className="px-4 py-3">Grade Level</th>
+              <th className="px-4 py-3">Status</th>
+              <th className="hidden px-4 py-3 md:table-cell">Submitted</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -296,7 +296,7 @@ export function ApplicationsTable({
                     {app.status === "approved" ? "Approved" : "Pending"}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-muted-foreground">
+                <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                   {new Date(app.submitted_at).toLocaleDateString("en-PH", {
                     year: "numeric",
                     month: "short",

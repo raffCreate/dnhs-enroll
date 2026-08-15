@@ -73,14 +73,14 @@ export function ArchivedTable({
 
       <div className="overflow-hidden rounded-lg border border-border bg-background">
         <table className="w-full text-sm">
-          <thead>
+          <thead className="bg-primary/10 font-bold">
             <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
-              <th className="px-4 py-3 font-medium">Student No.</th>
-              <th className="px-4 py-3 font-medium">Name</th>
-              <th className="px-4 py-3 font-medium">Grade</th>
-              <th className="px-4 py-3 font-medium">Archived</th>
-              <th className="px-4 py-3 font-medium">Expires</th>
-              <th className="px-4 py-3 font-medium"></th>
+              <th className="hidden px-4 py-3 md:table-cell">Student No.</th>
+              <th className="px-4 py-3">Name</th>
+              <th className="px-4 py-3">Grade</th>
+              <th className="hidden px-4 py-3 md:table-cell">Archived</th>
+              <th className="hidden px-4 py-3 md:table-cell">Expires</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -104,21 +104,21 @@ export function ArchivedTable({
                   key={student.archive_id}
                   className="border-b border-border last:border-0"
                 >
-                  <td className="px-4 py-3 text-foreground">
+                  <td className="hidden px-4 py-3 text-foreground md:table-cell">
                     {student.student_number ?? "—"}
                   </td>
                   <td className="px-4 py-3 text-foreground">{fullName}</td>
                   <td className="px-4 py-3 text-foreground">
                     Grade {student.grade_level}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">
+                  <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                     {new Date(student.archived_at).toLocaleDateString("en-PH", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
                     })}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">
+                  <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                     {new Date(student.expires_at).toLocaleDateString("en-PH", {
                       year: "numeric",
                       month: "short",
