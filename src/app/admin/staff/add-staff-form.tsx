@@ -5,6 +5,8 @@ import { createStaffAction } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 type CreateStaffState = { error: string; success?: boolean };
 const initialState: CreateStaffState = { error: "" };
@@ -14,6 +16,8 @@ export function AddStaffForm() {
     createStaffAction,
     initialState,
   );
+
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="rounded-lg border border-border bg-background p-4">
@@ -27,13 +31,29 @@ export function AddStaffForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="new-password">Password</Label>
-          <Input
-            id="new-password"
-            name="password"
-            type="password"
-            required
-            minLength={8}
-          />
+          <div className="relative">
+            <Input
+              id="new-password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              minLength={8}
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          </div>
         </div>
         <div className="space-y-2">
           <Label htmlFor="role">Role</Label>

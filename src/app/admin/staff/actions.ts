@@ -60,3 +60,60 @@ export async function createStaffAction(
   revalidatePath("/admin/staff");
   return { error: "", success: true };
 }
+
+export async function updateRoleAction(
+  adminId: number,
+  newRole: "admin" | "staff",
+  _prevState: { error: string; success?: boolean },
+  _formData: FormData,
+): Promise<{ error: string; success?: boolean }> {
+  const session = await getSession();
+  if (!session || session.role !== "admin") {
+    return { error: "You are not authorized to perform this action." };
+  }
+
+  if (session.adminId === adminId) {
+    return { error: "You cannot change your own role." };
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("administrators")
+    .update({ role: newRole })
+    .eq("admin_id", adminId);
+
+  if (error) {
+    return { error: "Failed to update role. Please try again." };
+  }
+
+  revalidatePath("/admin/staff");
+  return { error: "", success: true };
+}
+
+export async function deleteStaffAction(
+  adminId: number,
+  _prevState: { error: string; success?: boolean },
+  _formData: FormData,
+): Promise<{ error: string; success?: boolean }> {
+  const session = await getSession();
+  if (!session || session.role !== "admin") {
+    return { error: "You are not authorized to perform this action." };
+  }
+
+  if (session.adminId === adminId) {
+    return { error: "You cannot delete your own account." };
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("administrators")
+    .delete()
+    .eq("admin_id", adminId);
+
+  if (error) {
+    return { error: "Failed to delete account. Please try again." };
+  }
+
+  revalidatePath("/admin/staff");
+  return { error: "", success: true };
+}

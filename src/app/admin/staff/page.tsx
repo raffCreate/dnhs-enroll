@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { AddStaffForm } from "./add-staff-form";
+import { StaffTable } from "./staff-table";
 
 export default async function StaffPage() {
   const session = await getSession();
@@ -23,43 +24,16 @@ export default async function StaffPage() {
           Manage Staff
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Add and view staff and admin accounts.
+          Add, promote, or remove staff and admin accounts.
         </p>
       </div>
 
       <AddStaffForm />
 
-      <div className="overflow-hidden rounded-lg border border-border bg-background">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border text-left text-xs uppercase text-muted-foreground">
-              <th className="px-4 py-3 font-medium">Username</th>
-              <th className="px-4 py-3 font-medium">Role</th>
-              <th className="px-4 py-3 font-medium">Created</th>
-            </tr>
-          </thead>
-          <tbody>
-            {administrators?.map((admin) => (
-              <tr
-                key={admin.admin_id}
-                className="border-b border-border last:border-0"
-              >
-                <td className="px-4 py-3 text-foreground">{admin.username}</td>
-                <td className="px-4 py-3 capitalize text-foreground">
-                  {admin.role}
-                </td>
-                <td className="px-4 py-3 text-muted-foreground">
-                  {new Date(admin.created_at).toLocaleDateString("en-PH", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <StaffTable
+        administrators={administrators ?? []}
+        currentAdminId={session.adminId}
+      />
     </div>
   );
 }
