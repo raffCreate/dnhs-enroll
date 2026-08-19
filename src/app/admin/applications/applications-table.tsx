@@ -130,6 +130,16 @@ type Application = {
   email: string | null;
   address: string;
   grade_level: number;
+  strand: string;
+  lrn: string;
+  mother_name: string | null;
+  mother_contact: string | null;
+  father_name: string | null;
+  father_contact: string | null;
+  height: number | null;
+  weight: number | null;
+  is_4ps_member: boolean;
+  household_id: string | null;
   status: string;
   submitted_at: string;
   school_years: { school_year: string } | null;

@@ -11,7 +11,7 @@ const steps = [
   {
     title: "Read the Guide",
     description:
-      "Check the Home and About pages for details on the CSS strand and the enrollment process.",
+      "Check the Home and About pages for details on the CSS and ICT strands and the enrollment process.",
   },
   {
     title: "Complete the Application",
@@ -69,33 +69,11 @@ export default function AboutPage() {
             About the Enrollment System
           </h1>
           <p className="mt-4 max-w-xl text-balance font-semibold text-sm text-foreground sm:text-base">
-            A simple way to start your CSS strand enrollment online, before
-            completing the process at Dimasalang National High School.
+            A simple way to start your CSS or ICT strand enrollment online,
+            before completing the process at Dimasalang National High School.
           </p>
         </div>
       </section>
-
-      {/* System / strand info */}
-      {/* <section className="mx-auto max-w-3xl px-4 pb-4 sm:px-6">
-        <div className="space-y-4 text-sm text-muted-foreground sm:text-base">
-          <p>
-            The Online Based Enrolment System for CSS Student makes the initial
-            enrollment application for the Computer Systems Servicing (CSS)
-            strand more convenient and organized. It is designed for Senior High
-            School students applying to{" "}
-            <span className="font-medium text-foreground">Grade 11</span> or{" "}
-            <span className="font-medium text-foreground">Grade 12</span>.
-          </p>
-          <p>
-            Students can access the enrollment application online without
-            creating an account. Submitting the online application does not
-            finalize enrollment — you must still submit your required documents
-            in person for the school to verify and confirm your enrollment.
-          </p>
-        </div>
-      </section> */}
-
-      {/* <RingDivider /> */}
 
       {/* Step-by-step guide */}
       <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">

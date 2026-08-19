@@ -29,6 +29,7 @@ export default async function AdminDashboardPage() {
     grade11Count,
     grade12Count,
     archivedCount,
+    fourPsCount,
   ] = await Promise.all([
     getCount(supabase, "enrollment_applications", (q) =>
       q.eq("status", "pending"),
@@ -39,6 +40,9 @@ export default async function AdminDashboardPage() {
     getCount(supabase, "grade_11_students"),
     getCount(supabase, "grade_12_students"),
     getCount(supabase, "archived_students"),
+    getCount(supabase, "enrollment_applications", (q) =>
+      q.eq("is_4ps_member", true),
+    ),
   ]);
 
   const { data: recentApplications } = await supabase
@@ -74,6 +78,11 @@ export default async function AdminDashboardPage() {
       label: "Archived Students",
       value: archivedCount,
       href: "/admin/archived",
+    },
+    {
+      label: "4P's Members",
+      value: fourPsCount,
+      href: "/admin/applications",
     },
   ];
 

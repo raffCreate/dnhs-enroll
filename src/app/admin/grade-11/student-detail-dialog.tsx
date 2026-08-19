@@ -25,6 +25,16 @@ type Student = {
   contact_number: string;
   email: string | null;
   address: string;
+  strand: string;
+  lrn: string;
+  mother_name: string | null;
+  mother_contact: string | null;
+  father_name: string | null;
+  father_contact: string | null;
+  height: number | null;
+  weight: number | null;
+  is_4ps_member: boolean;
+  household_id: string | null;
 };
 
 type ActionState = { error: string; success?: boolean };
@@ -42,6 +52,7 @@ export function StudentDetailDialog({
   const [view, setView] = useState<"details" | "edit" | "archive-confirm">(
     "details",
   );
+  const [is4ps, setIs4ps] = useState(student.is_4ps_member);
 
   const updateWithIds = updateStudentAction.bind(
     null,
@@ -85,30 +96,115 @@ export function StudentDetailDialog({
             <DialogHeader>
               <DialogTitle>{fullName}</DialogTitle>
               <DialogDescription>
-                Student No. {student.student_number ?? "—"}
+                Student No. {student.student_number ?? "—"} · {student.strand}
               </DialogDescription>
             </DialogHeader>
 
-            <div className="grid gap-3 text-sm sm:grid-cols-2">
+            <div className="space-y-4">
               <div>
-                <p className="text-xs text-muted-foreground">Birthdate</p>
-                <p className="text-foreground">{student.birthdate}</p>
+                <p className="text-xs font-semibold uppercase text-muted-foreground">
+                  Personal Information
+                </p>
+                <div className="mt-2 grid gap-3 text-sm sm:grid-cols-2">
+                  <div>
+                    <p className="text-xs text-muted-foreground">LRN</p>
+                    <p className="text-foreground">{student.lrn}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Birthdate</p>
+                    <p className="text-foreground">{student.birthdate}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Gender</p>
+                    <p className="text-foreground">{student.gender}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Height / Weight
+                    </p>
+                    <p className="text-foreground">
+                      {student.height ?? "—"} cm / {student.weight ?? "—"} kg
+                    </p>
+                  </div>
+                </div>
               </div>
+
               <div>
-                <p className="text-xs text-muted-foreground">Gender</p>
-                <p className="text-foreground">{student.gender}</p>
+                <p className="text-xs font-semibold uppercase text-muted-foreground">
+                  Contact &amp; Address
+                </p>
+                <div className="mt-2 grid gap-3 text-sm sm:grid-cols-2">
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Contact Number
+                    </p>
+                    <p className="text-foreground">{student.contact_number}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Email</p>
+                    <p className="text-foreground">{student.email ?? "—"}</p>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <p className="text-xs text-muted-foreground">Address</p>
+                    <p className="text-foreground">{student.address}</p>
+                  </div>
+                </div>
               </div>
+
               <div>
-                <p className="text-xs text-muted-foreground">Contact Number</p>
-                <p className="text-foreground">{student.contact_number}</p>
+                <p className="text-xs font-semibold uppercase text-muted-foreground">
+                  Parent / Guardian
+                </p>
+                <div className="mt-2 grid gap-3 text-sm sm:grid-cols-2">
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Mother&apos;s Name
+                    </p>
+                    <p className="text-foreground">
+                      {student.mother_name ?? "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Mother&apos;s Contact
+                    </p>
+                    <p className="text-foreground">
+                      {student.mother_contact ?? "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Father&apos;s Name
+                    </p>
+                    <p className="text-foreground">
+                      {student.father_name ?? "—"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">
+                      Father&apos;s Contact
+                    </p>
+                    <p className="text-foreground">
+                      {student.father_contact ?? "—"}
+                    </p>
+                  </div>
+                </div>
               </div>
+
               <div>
-                <p className="text-xs text-muted-foreground">Email</p>
-                <p className="text-foreground">{student.email ?? "—"}</p>
-              </div>
-              <div className="sm:col-span-2">
-                <p className="text-xs text-muted-foreground">Address</p>
-                <p className="text-foreground">{student.address}</p>
+                <p className="text-xs font-semibold uppercase text-muted-foreground">
+                  4Ps Status
+                </p>
+                <div className="mt-2 text-sm">
+                  <p className="text-foreground">
+                    {student.is_4ps_member ? "4Ps Member" : "Not a 4Ps Member"}
+                  </p>
+                  {student.is_4ps_member && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Household ID: {student.household_id ?? "—"}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -199,6 +295,29 @@ export function StudentDetailDialog({
                     <option value="Female">Female</option>
                   </select>
                 </div>
+                <div className="space-y-2 sm:col-span-2">
+                  <Label htmlFor="lrn">LRN</Label>
+                  <Input
+                    id="lrn"
+                    name="lrn"
+                    defaultValue={student.lrn}
+                    maxLength={12}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="strand">Strand</Label>
+                  <select
+                    id="strand"
+                    name="strand"
+                    defaultValue={student.strand}
+                    required
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  >
+                    <option value="CSS">CSS</option>
+                    <option value="ICT">ICT</option>
+                  </select>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="contact_number">Contact Number</Label>
                   <Input
@@ -217,6 +336,26 @@ export function StudentDetailDialog({
                     defaultValue={student.email ?? ""}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label htmlFor="height">Height (cm)</Label>
+                  <Input
+                    id="height"
+                    name="height"
+                    type="number"
+                    step="0.01"
+                    defaultValue={student.height ?? ""}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="weight">Weight (kg)</Label>
+                  <Input
+                    id="weight"
+                    name="weight"
+                    type="number"
+                    step="0.01"
+                    defaultValue={student.weight ?? ""}
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
@@ -227,6 +366,70 @@ export function StudentDetailDialog({
                   required
                 />
               </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="mother_name">Mother&apos;s Name</Label>
+                  <Input
+                    id="mother_name"
+                    name="mother_name"
+                    defaultValue={student.mother_name ?? ""}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="mother_contact">Mother&apos;s Contact</Label>
+                  <Input
+                    id="mother_contact"
+                    name="mother_contact"
+                    defaultValue={student.mother_contact ?? ""}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="father_name">Father&apos;s Name</Label>
+                  <Input
+                    id="father_name"
+                    name="father_name"
+                    defaultValue={student.father_name ?? ""}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="father_contact">Father&apos;s Contact</Label>
+                  <Input
+                    id="father_contact"
+                    name="father_contact"
+                    defaultValue={student.father_contact ?? ""}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="is_4ps_member"
+                  name="is_4ps_member"
+                  checked={is4ps}
+                  onChange={(e) => setIs4ps(e.target.checked)}
+                  className="h-4 w-4 rounded border-input"
+                />
+                <Label
+                  htmlFor="is_4ps_member"
+                  className="cursor-pointer text-sm"
+                >
+                  4Ps Member
+                </Label>
+              </div>
+
+              {is4ps && (
+                <div className="space-y-2">
+                  <Label htmlFor="household_id">Household ID</Label>
+                  <Input
+                    id="household_id"
+                    name="household_id"
+                    defaultValue={student.household_id ?? ""}
+                    required={is4ps}
+                  />
+                </div>
+              )}
 
               {updateState?.error && (
                 <p className="text-sm text-destructive">{updateState.error}</p>

@@ -63,6 +63,16 @@ export async function approveApplicationAction(
     address: application.address,
     school_year_id: application.school_year_id,
     application_id: application.application_id,
+    lrn: application.lrn,
+    strand: application.strand,
+    mother_name: application.mother_name,
+    mother_contact: application.mother_contact,
+    father_name: application.father_name,
+    father_contact: application.father_contact,
+    height: application.height,
+    weight: application.weight,
+    is_4ps_member: application.is_4ps_member,
+    household_id: application.household_id,
   });
 
   if (insertError) {

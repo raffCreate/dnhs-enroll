@@ -6,11 +6,12 @@ const PAGE_SIZE = 10;
 export default async function Grade11Page({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; q?: string }>;
+  searchParams: Promise<{ page?: string; q?: string; strand?: string }>;
 }) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
   const query = params.q?.trim() ?? "";
+  const strand = params.strand ?? "";
 
   const supabase = createAdminClient();
 
@@ -23,6 +24,10 @@ export default async function Grade11Page({
     request = request.or(
       `first_name.ilike.%${query}%,last_name.ilike.%${query}%,student_number.ilike.%${query}%`,
     );
+  }
+
+  if (strand) {
+    request = request.eq("strand", strand);
   }
 
   const from = (page - 1) * PAGE_SIZE;
@@ -46,6 +51,7 @@ export default async function Grade11Page({
         totalCount={count ?? 0}
         pageSize={PAGE_SIZE}
         initialQuery={query}
+        initialStrand={strand}
       />
     </div>
   );

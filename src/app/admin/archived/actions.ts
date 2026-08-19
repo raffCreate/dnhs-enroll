@@ -43,6 +43,16 @@ export async function restoreStudentAction(
     school_year_id: archived.school_year_id,
     application_id: archived.application_id,
     enrolled_at: archived.enrolled_at,
+    lrn: archived.lrn,
+    strand: archived.strand,
+    mother_name: archived.mother_name,
+    mother_contact: archived.mother_contact,
+    father_name: archived.father_name,
+    father_contact: archived.father_contact,
+    height: archived.height,
+    weight: archived.weight,
+    is_4ps_member: archived.is_4ps_member,
+    household_id: archived.household_id,
   });
 
   if (insertError) {

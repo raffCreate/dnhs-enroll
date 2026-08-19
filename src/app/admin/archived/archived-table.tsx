@@ -14,6 +14,7 @@ type ArchivedStudent = {
   middle_name: string | null;
   last_name: string;
   grade_level: number;
+  strand: string;
   archived_at: string;
   expires_at: string;
 };
@@ -109,7 +110,7 @@ export function ArchivedTable({
                   </td>
                   <td className="px-4 py-3 text-foreground">{fullName}</td>
                   <td className="px-4 py-3 text-foreground">
-                    Grade {student.grade_level}
+                    Grade {student.grade_level} · {student.strand}
                   </td>
                   <td className="hidden px-4 py-3 text-muted-foreground md:table-cell">
                     {new Date(student.archived_at).toLocaleDateString("en-PH", {

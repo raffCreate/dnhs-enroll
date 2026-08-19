@@ -35,12 +35,12 @@ export default async function HomePage() {
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-4 text-center sm:px-6">
           <h1 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-            CSS Strand Online Enrollment
+            SHS Online Enrollment
           </h1>
-          <p className="mt-4 max-w-xl text-balance font-semibold text-sm textforeground sm:text-base">
-            Start your enrollment application for the Computer Systems Servicing
-            strand at Dimasalang National High School. Apply online, then
-            complete the process by submitting your requirements at the school.
+          <p className="mt-4 max-w-xl text-balance font-semibold text-sm text-foreground sm:text-base">
+            Start your enrollment application for the CSS or ICT strand at
+            Dimasalang National High School. Apply online, then complete the
+            process by submitting your requirements at the school.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <EnrollmentDialog schoolYear={schoolYear} />
@@ -66,7 +66,7 @@ export default async function HomePage() {
               Grade 11 &amp; 12
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Senior High School CSS strand applicants
+              Senior High School CSS &amp; ICT applicants
             </p>
           </div>
           <div>
@@ -93,12 +93,12 @@ export default async function HomePage() {
       {/* About teaser */}
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
         <h2 className="font-heading text-2xl font-semibold text-foreground">
-          About the CSS Strand
+          About the Enrollment Process
         </h2>
         <p className="mt-4 text-sm text-muted-foreground sm:text-base">
-          The Computer Systems Servicing strand prepares Senior High School
-          students with practical skills in computer hardware, networking, and
-          systems maintenance. This online system makes it easier to start your
+          Dimasalang National High School offers two Senior High School strands:
+          Computer Systems Servicing (CSS) and Information and Communications
+          Technology (ICT). This online system makes it easier to start your
           enrollment application before completing the process in person at the
           school.
         </p>

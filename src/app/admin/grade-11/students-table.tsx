@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { StudentDetailDialog } from "./student-detail-dialog";
+import { cn } from "@/lib/utils";
 
 type Student = {
   student_id: number;
@@ -18,6 +19,16 @@ type Student = {
   contact_number: string;
   email: string | null;
   address: string;
+  strand: string;
+  lrn: string;
+  mother_name: string | null;
+  mother_contact: string | null;
+  father_name: string | null;
+  father_contact: string | null;
+  height: number | null;
+  weight: number | null;
+  is_4ps_member: boolean;
+  household_id: string | null;
 };
 
 export function StudentsTable({
@@ -26,12 +37,14 @@ export function StudentsTable({
   totalCount,
   pageSize,
   initialQuery,
+  initialStrand,
 }: {
   students: Student[];
   page: number;
   totalCount: number;
   pageSize: number;
   initialQuery: string;
+  initialStrand: string;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -41,24 +54,35 @@ export function StudentsTable({
 
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
+  const strandOptions = [
+    { value: "", label: "All Strands" },
+    { value: "CSS", label: "CSS" },
+    { value: "ICT", label: "ICT" },
+  ];
+
   const updateParams = useCallback(
-    (nextPage: number, nextQuery: string) => {
+    (next: { page?: number; q?: string; strand?: string }) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (nextQuery) {
-        params.set("q", nextQuery);
-      } else {
-        params.delete("q");
-      }
+      const q = next.q ?? initialQuery;
+      const strand = next.strand ?? initialStrand;
+      const nextPage = next.page ?? 1;
+
+      if (q) params.set("q", q);
+      else params.delete("q");
+
+      if (strand) params.set("strand", strand);
+      else params.delete("strand");
+
       params.set("page", String(nextPage));
       router.push(`${pathname}?${params.toString()}`);
     },
-    [router, pathname, searchParams],
+    [router, pathname, searchParams, initialQuery, initialStrand],
   );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (search !== initialQuery) {
-        updateParams(1, search);
+        updateParams({ q: search, page: 1 });
       }
     }, 300);
     return () => clearTimeout(timeout);
@@ -73,6 +97,23 @@ export function StudentsTable({
         onChange={(e) => setSearch(e.target.value)}
         className="max-w-sm"
       />
+
+      <div className="flex gap-1">
+        {strandOptions.map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => updateParams({ strand: opt.value, page: 1 })}
+            className={cn(
+              "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+              initialStrand === opt.value
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
 
       <div className="overflow-hidden rounded-lg border border-border bg-background">
         <table className="w-full text-sm">
@@ -135,7 +176,7 @@ export function StudentsTable({
             variant="outline"
             size="sm"
             disabled={page <= 1}
-            onClick={() => updateParams(page - 1, search)}
+            onClick={() => updateParams({ page: page - 1 })}
           >
             Previous
           </Button>
@@ -143,7 +184,7 @@ export function StudentsTable({
             variant="outline"
             size="sm"
             disabled={page >= totalPages}
-            onClick={() => updateParams(page + 1, search)}
+            onClick={() => updateParams({ page: page + 1 })}
           >
             Next
           </Button>

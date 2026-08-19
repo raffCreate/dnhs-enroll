@@ -30,15 +30,46 @@ export async function updateStudentAction(
   const email = (formData.get("email") as string)?.trim() || null;
   const address = (formData.get("address") as string)?.trim();
 
+  const lrn = (formData.get("lrn") as string)?.trim();
+  const strand = formData.get("strand") as string;
+  const mother_name = (formData.get("mother_name") as string)?.trim() || null;
+  const mother_contact =
+    (formData.get("mother_contact") as string)?.trim() || null;
+  const father_name = (formData.get("father_name") as string)?.trim() || null;
+  const father_contact =
+    (formData.get("father_contact") as string)?.trim() || null;
+
+  const heightRaw = formData.get("height") as string;
+  const weightRaw = formData.get("weight") as string;
+  const height = heightRaw ? Number(heightRaw) : null;
+  const weight = weightRaw ? Number(weightRaw) : null;
+
+  const is_4ps_member = formData.get("is_4ps_member") === "on";
+  const household_id = (formData.get("household_id") as string)?.trim() || null;
+
   if (
     !first_name ||
     !last_name ||
     !birthdate ||
     !gender ||
     !contact_number ||
-    !address
+    !address ||
+    !lrn ||
+    !strand
   ) {
     return { error: "Please fill out all required fields." };
+  }
+
+  if (!/^\d{12}$/.test(lrn)) {
+    return { error: "LRN must be exactly 12 digits." };
+  }
+
+  if (strand !== "CSS" && strand !== "ICT") {
+    return { error: "Please select a valid strand." };
+  }
+
+  if (is_4ps_member && !household_id) {
+    return { error: "Household ID is required for 4Ps members." };
   }
 
   const supabase = createAdminClient();
@@ -54,6 +85,16 @@ export async function updateStudentAction(
       contact_number,
       email,
       address,
+      lrn,
+      strand,
+      mother_name,
+      mother_contact,
+      father_name,
+      father_contact,
+      height,
+      weight,
+      is_4ps_member,
+      household_id: is_4ps_member ? household_id : null,
     })
     .eq("student_id", studentId);
 
@@ -106,6 +147,16 @@ export async function archiveStudentAction(
       application_id: student.application_id,
       enrolled_at: student.enrolled_at,
       archived_by: session.adminId,
+      lrn: student.lrn,
+      strand: student.strand,
+      mother_name: student.mother_name,
+      mother_contact: student.mother_contact,
+      father_name: student.father_name,
+      father_contact: student.father_contact,
+      height: student.height,
+      weight: student.weight,
+      is_4ps_member: student.is_4ps_member,
+      household_id: student.household_id,
     });
 
   if (insertError) {

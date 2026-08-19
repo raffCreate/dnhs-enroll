@@ -50,9 +50,6 @@ export function Header() {
               <span className="font-heading text-sm font-semibold text-foreground sm:text-base">
                 Dimasalang National High School
               </span>
-              <span className="text-xs text-muted-foreground">
-                CSS Strand Enrollment
-              </span>
             </div>
           </Link>
         </div>
